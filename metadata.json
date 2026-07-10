@@ -1,0 +1,6 @@
+{
+  "name": "Hidden Camera Detector",
+  "description": "Ứng dụng quét và phát hiện camera giấu kín thông minh bằng AI, cảm biến từ trường EMF và bộ lọc phản quang thấu kính.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
