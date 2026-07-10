@@ -32,3 +32,22 @@ jobs:
       env:
         NODE_ENV: production
 
+    - name: Google Auth
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+    - name: Set up Cloud SDK
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      uses: 'google-github-actions/setup-gcloud@v2'
+
+    - name: Deploy to Cloud Run
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      run: |
+        gcloud run deploy hidden-camera-detector \
+          --source . \
+          --region asia-southeast1 \
+          --allow-unauthenticated \
+          --set-env-vars=GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+
